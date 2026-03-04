@@ -133,7 +133,7 @@ public class Dictionary {
         List<String> notInDict = new ArrayList<>();
         for (String[] wordList : allWords) {
             for (String word : wordList) {
-                if (!contains(word)) {
+                if (!contains(word) && !word.isEmpty()) {
                     notInDict.add(word);
                 }
             }
