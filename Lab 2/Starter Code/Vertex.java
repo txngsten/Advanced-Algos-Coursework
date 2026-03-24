@@ -8,6 +8,16 @@ public class Vertex implements Comparable<Vertex> {
     private String label;
 
     /**
+     * Number of inbound edges
+     */
+    private int inDegree;
+
+    /**
+     * Number of outbound edges
+     */
+    private int outDegree;
+
+    /**
      * Enumeration to model the states of a Vertex
      */
     public enum VertexState {
@@ -76,5 +86,21 @@ public class Vertex implements Comparable<Vertex> {
      */
     public String getLabel() {
         return label;
+    }
+
+    public int getOutDegree() {
+        return outDegree;
+    }
+
+    public void setOutDegree(int outDegree) {
+        this.outDegree = outDegree;
+    }
+
+    public int getInDegree() {
+        return inDegree;
+    }
+
+    public void setInDegree(int inDegree) {
+        this.inDegree = inDegree;
     }
 }

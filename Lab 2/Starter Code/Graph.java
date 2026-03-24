@@ -1,5 +1,7 @@
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 public abstract class Graph {
@@ -16,7 +18,21 @@ public abstract class Graph {
      *
      * @see Vertex.VertexState
      */
-    Map<String, Vertex.VertexState> stateMap = new TreeMap<>();
+    private Map<String, Vertex.VertexState> stateMap = new TreeMap<>();
+    
+    /**
+     * Set map of string to vertex object
+     */
+    private Map<String, Vertex> vertices = new HashMap<>();
+
+    /**
+     * Adjacency list, LC/technical interview style
+     */
+    private Map<String, ArrayList<Vertex>> adjacencyList = new HashMap<>();
+
+    protected void addDirectedEdge(Vertex u, Vertex v) {
+        adjacencyList.computeIfAbsent(u.getLabel(), k -> new ArrayList<>()).add(v);
+    }
 
     public void clearState() {
         stateMap.clear();
@@ -53,7 +69,14 @@ public abstract class Graph {
      * 
      * @param v the vertex to be added
      */
-    abstract void addVertex(Vertex v);
+    void addVertex(Vertex v) {
+        if (stateMap.containsKey(v.getLabel())) {
+            return;
+        }
+        
+        vertices.put(v.getLabel(), v);
+        setState(v, Vertex.VertexState.UNVISITED);
+    }
 
     /**
      * Add edge v-w. Will also add Vertex v and w if they do not already exist.
@@ -95,7 +118,9 @@ public abstract class Graph {
      * @param v the vertex to find the neighbours of.
      * @return the list of adjacent vertices or null if no adjacent vertices.
      */
-    abstract List<Vertex> adjacentTo(Vertex v);
+    List<Vertex> adjacentTo(Vertex v) {
+        return adjacencyList.get(v.getLabel());
+    }
 
     /**
      * number of neighbours of vertex v, labelled with the String v.
@@ -113,14 +138,18 @@ public abstract class Graph {
      * @param v
      * @return
      */
-    abstract int degree(Vertex v);
+    int degree(Vertex v) {
+        return v.getInDegree();
+    }
 
     /**
      * Get all the vertices associated with the graph in lexicographic order.
      * 
      * @return a list of adjacent vertices
      */
-    abstract List<Vertex> getVertices();
+    List<Vertex> getVertices() {
+        return new ArrayList<>(vertices.values());
+    }
 
     /**
      * is v-w an edge in the graph
@@ -140,7 +169,25 @@ public abstract class Graph {
      * @param w
      * @return
      */
-    abstract boolean hasEdge(Vertex v, Vertex w);
+   boolean hasEdge(Vertex v, Vertex w) {
+        if (adjacencyList.get(v.getLabel()) != null) {
+            for (Vertex u : adjacencyList.get(v.getLabel())) {
+                if (u.getLabel() == w.getLabel()) {
+                    return true;
+                }
+            }
+        }
+
+        if (adjacencyList.get(w.getLabel()) != null) {
+            for (Vertex u : adjacencyList.get(w.getLabel())) {
+                if (u.getLabel() == v.getLabel()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     /**
      * is v a vertex in the graph
@@ -158,7 +205,9 @@ public abstract class Graph {
      * @param vertex
      * @return
      */
-    abstract boolean hasVertex(Vertex vertex);
+    boolean hasVertex(Vertex vertex) {
+        return stateMap.containsKey(vertex.getLabel());
+    }
 
     /**
      * Gets the vertex in the graph with the label v
@@ -166,6 +215,8 @@ public abstract class Graph {
      * @param v
      * @return
      */
-    abstract Vertex getVertex(String v);
+    Vertex getVertex(String v) {
+        return vertices.get(v); 
+    }
 
 }
