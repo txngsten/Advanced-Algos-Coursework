@@ -196,12 +196,13 @@ public class GraphDriver {
 
     }
 
+    @SuppressWarnings("resource")
     public static void bacon() {
         String castFile = "data/cast.rated.txt";
         try {
             Scanner fs = new Scanner(new FileInputStream(castFile));
 
-            Graph g = null; // you new Adjacency List Undirected Graph();
+            Graph g = new AdjacencyListUndirectedGraph(); // you new Adjacency List Undirected Graph();
 
             System.out.println("reading in file: " + castFile);
             while (fs.hasNext()) {
@@ -256,11 +257,13 @@ public class GraphDriver {
 
         printGraph(g);
 
+        DepthFirstSearch dfs = new DepthFirstSearch(g, startFrom);
+
         System.out.println("Depth First");
-        List<Vertex> ld = null;
+        System.out.println("starting from: " + startFrom);
+        List<Vertex> ld = dfs.getTraversal();
         // this list is from your post-order Depth First Traversal starting
         // at startFrom (defaults to "a");
-        ld = null;
         System.out.println(ld);
 
     }
