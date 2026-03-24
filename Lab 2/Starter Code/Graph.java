@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
@@ -87,6 +88,9 @@ public abstract class Graph {
      * @param w vertex w of the edge
      */
     void addEdge(String v, String w) {
+        addVertex(v);
+        addVertex(w);
+
         addEdge(new Vertex(v), new Vertex(w));
     }
 
@@ -119,7 +123,14 @@ public abstract class Graph {
      * @return the list of adjacent vertices or null if no adjacent vertices.
      */
     List<Vertex> adjacentTo(Vertex v) {
-        return adjacencyList.get(v.getLabel());
+        ArrayList<Vertex> adjacent = adjacencyList.get(v.getLabel());
+
+        if (adjacent == null) {
+            return new ArrayList<>();
+        }
+
+        adjacent.sort(Comparator.comparing(Vertex::getLabel));
+        return adjacent;
     }
 
     /**

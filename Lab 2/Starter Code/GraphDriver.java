@@ -98,10 +98,10 @@ public class GraphDriver {
                 String graphType = input[1];
                 switch (graphType) {
                     case "U":
-                        g = null; // your new Adjacency List Undirected Graph
+                        g = new AdjacencyListUndirectedGraph(); // your new Adjacency List Undirected Graph
                         break;
                     case "D":
-                        g = null; // your new Adjacency List Directed Graph
+                        g = new AdjacencyListDirectedGraph(); // your new Adjacency List Directed Graph
                         break;
 
                 }
