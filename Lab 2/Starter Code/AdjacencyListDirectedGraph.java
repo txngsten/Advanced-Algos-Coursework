@@ -3,7 +3,7 @@ class AdjacencyListDirectedGraph extends Graph {
     void addEdge(Vertex v, Vertex w) {
         addDirectedEdge(v, w);
 
-        v.setOutDegree(v.getInDegree() + 1);
+        v.setOutDegree(v.getOutDegree() + 1);
         w.setInDegree(w.getInDegree() + 1);
     }
 }

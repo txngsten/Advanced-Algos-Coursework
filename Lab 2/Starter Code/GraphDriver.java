@@ -273,15 +273,26 @@ public class GraphDriver {
         System.out.println("test 4: Topological Sort");
 
         // build a sample graph and print it - only need directed graph.
-        Graph g = null; // your new Adjacency List Directed Graph();
+        Graph g = new AdjacencyListDirectedGraph(); // your new Adjacency List Directed Graph();
+
+        g.addEdge("LA15", "LA16");
+        g.addEdge("LA15", "LA31");
+        g.addEdge("LA16", "LA127");
+        g.addEdge("LA16", "LA141");
+        g.addEdge("LA16", "LA32");
+        g.addEdge("LA22", "LA126");
+        g.addEdge("LA22", "LA141");
+        g.addEdge("LA31", "LA32");
+        g.addEdge("LA32", "LA126");
+        g.addEdge("LA32", "LA169");
 
         if (printGraph.equals("Y")) {
             printGraph(g);
         }
 
         System.out.println("Topological Sort");
-        List<Vertex> lt = null; // this list from your Topological Sort of graph g;
+        TopologicalSort topo = new TopologicalSort(g);
+        List<Vertex> lt = topo.getTopoSort(); // this list from your Topological Sort of graph g;
         System.out.println(lt);
-
     }
 }

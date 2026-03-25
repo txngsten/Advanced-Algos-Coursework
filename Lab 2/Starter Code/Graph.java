@@ -91,7 +91,7 @@ public abstract class Graph {
         addVertex(v);
         addVertex(w);
 
-        addEdge(new Vertex(v), new Vertex(w));
+        addEdge(vertices.get(v), vertices.get(w));
     }
 
     /**
@@ -159,7 +159,10 @@ public abstract class Graph {
      * @return a list of adjacent vertices
      */
     List<Vertex> getVertices() {
-        return new ArrayList<>(vertices.values());
+        List<Vertex> allVertices = new ArrayList<>(vertices.values());
+        allVertices.sort(Comparator.comparing(Vertex::getLabel));
+        
+        return allVertices;
     }
 
     /**
